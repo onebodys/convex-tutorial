@@ -1,3 +1,5 @@
+import {useMutation} from "convex/react";
+import { api } from "../convex/_generated/api";
 import { useEffect, useState } from "react";
 import { faker } from "@faker-js/faker";
 
@@ -10,6 +12,7 @@ export default function App() {
     { _id: "2", user: NAME, body: "Beautiful sunrise today" },
   ];
   // TODO: Add mutation hook here.
+  const sendMessage = useMutation(api.chat.sendMessage);
 
   const [newMessageText, setNewMessageText] = useState("");
 
@@ -41,7 +44,7 @@ export default function App() {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          alert("Mutation not implemented yet");
+          await sendMessage({user: NAME, body: newMessageText});
           setNewMessageText("");
         }}
       >
