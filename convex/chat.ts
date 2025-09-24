@@ -1,4 +1,4 @@
-import {mutation} from "./_generated/server";
+import {query, mutation} from "./_generated/server";
 import {v}  from "convex/values";
 
 export const sendMessage = mutation({
@@ -14,3 +14,11 @@ export const sendMessage = mutation({
     })
   }
 })
+
+export const getMessages = query({
+  args: {},
+  handler: async(ctx) => {
+    const messages = await ctx.db.query("messages").order("desc").take(50);
+    return messages.reverse()
+  }
+});
